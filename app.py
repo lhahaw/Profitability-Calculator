@@ -1,7 +1,5 @@
 from flask import Flask, request, render_template
-import webbrowser
-import threading
-
+import os
 app = Flask(__name__)
 
 # 默认参数（和你Excel模型一致，可根据你的实际情况微调）
@@ -283,10 +281,7 @@ def index():
     return render_template("index.html", **context)
 
 
-def open_browser():
-    webbrowser.open("http://127.0.0.1:5000")
-
 if __name__ == "__main__":
-    # 启动时自动打开浏览器
-    threading.Timer(1.5, open_browser).start()
-    app.run(host="0.0.0.0", port=5000)
+    # 本地开发用：在 5000 端口跑
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
