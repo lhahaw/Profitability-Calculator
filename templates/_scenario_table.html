@@ -1,0 +1,29 @@
+<table>
+    <thead>
+      <tr>
+        <th>年小时 (H)<br><span>Annual Hours</span></th>
+        <th>变动成本/hr<br><span>Var Cost/hr</span></th>
+        <th>固定成本/hr<br><span>Fixed Cost/hr</span></th>
+        <th>总成本/hr<br><span>Total Cost/hr</span></th>
+        <th>盈亏平衡价<br><span>Break-even</span></th>
+        <th>示例售价<br><span>Sell Rate</span></th>
+        <th>年利润<br><span>Annual Profit</span></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for s in scenarios %}
+      <tr>
+        <td>{{ "%.0f"|format(s.hours) }}</td>
+        <td>NZ${{ "%.0f"|format(s.var_per_hr) }}</td>
+        <td>NZ${{ "%.0f"|format(s.fixed_per_hr) }}</td>
+        <td>NZ${{ "%.0f"|format(s.total_per_hr) }}</td>
+        <td>NZ${{ "%.0f"|format(s.breakeven) }}</td>
+        <td>NZ${{ "%.0f"|format(s.sell_rate) }}</td>
+        <td class="{% if s.annual_profit < 0 %}text-danger{% endif %}">
+          NZ${{ "%.0f"|format(s.annual_profit) }}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  

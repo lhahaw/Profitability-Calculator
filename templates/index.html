@@ -1,0 +1,200 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="layout-grid">
+
+  <!-- 左侧：输入表单 / Inputs -->
+  <div class="card">
+    <h2>输入参数 · Inputs</h2>
+    <small>
+      修改任意输入后点击「重新计算」，右侧会实时更新盈利结果和情景分析。<br>
+      Adjust any inputs and click "Recalculate" to update key metrics and scenario analysis.
+    </small>
+
+    <form method="post">
+      <!-- 基本参数 -->
+      <div class="field">
+        <span class="label">每小时销售价格 (Hourly Sell Price, NZD/hr)</span>
+        <input type="number" step="0.01" name="hourly_sell_price" value="{{ hourly_sell_price }}">
+      </div>
+      <div class="field">
+        <span class="label">年飞行小时数 (Annual Flight Hours)</span>
+        <input type="number" step="1" name="annual_hours" value="{{ annual_hours }}">
+      </div>
+
+      <!-- 变动成本 Variable Costs -->
+      <div class="field">
+        <span class="label">燃油消耗 (Fuel Burn, L/hr)</span>
+        <input type="number" step="0.1" name="fuel_burn" value="{{ fuel_burn }}">
+      </div>
+      <div class="field">
+        <span class="label">燃油价格 (Fuel Price, NZD/L)</span>
+        <input type="number" step="0.01" name="fuel_price" value="{{ fuel_price }}">
+      </div>
+      <div class="field">
+        <span class="label">机体维护储备 (Airframe Maint, NZD/hr)</span>
+        <input type="number" step="1" name="maint_airframe" value="{{ maint_airframe }}">
+      </div>
+      <div class="field">
+        <span class="label">发动机维护储备 (Engine Maint, NZD/hr)</span>
+        <input type="number" step="1" name="maint_engine" value="{{ maint_engine }}">
+      </div>
+      <div class="field">
+        <span class="label">其他维护储备 (Other Maint, NZD/hr)</span>
+        <input type="number" step="1" name="maint_other" value="{{ maint_other }}">
+      </div>
+      <div class="field">
+        <span class="label">导航与空管费 (Nav & ATC, NZD/hr)</span>
+        <input type="number" step="1" name="nav_atc" value="{{ nav_atc }}">
+      </div>
+      <div class="field">
+        <span class="label">起降与停场费 (Landing & Parking, NZD/hr)</span>
+        <input type="number" step="1" name="landing_parking" value="{{ landing_parking }}">
+      </div>
+      <div class="field">
+        <span class="label">地面与餐饮 (Handling & Catering, NZD/hr)</span>
+        <input type="number" step="1" name="handling_catering" value="{{ handling_catering }}">
+      </div>
+      <div class="field">
+        <span class="label">其他变动成本 (Other Variable, NZD/hr)</span>
+        <input type="number" step="1" name="var_other" value="{{ var_other }}">
+      </div>
+
+      <!-- 固定成本 Fixed Costs -->
+      <div class="field">
+        <span class="label">机长薪资 (Captain, NZD/year)</span>
+        <input type="number" step="1000" name="crew_captain" value="{{ crew_captain }}">
+      </div>
+      <div class="field">
+        <span class="label">副驾驶薪资 (First Officer, NZD/year)</span>
+        <input type="number" step="1000" name="crew_fo" value="{{ crew_fo }}">
+      </div>
+      <div class="field">
+        <span class="label">机组补贴 (Crew Allowances, NZD/year)</span>
+        <input type="number" step="1000" name="crew_allowance" value="{{ crew_allowance }}">
+      </div>
+      <div class="field">
+        <span class="label">培训与检查 (Training & Checks, NZD/year)</span>
+        <input type="number" step="1000" name="training" value="{{ training }}">
+      </div>
+      <div class="field">
+        <span class="label">保险 (Insurance, NZD/year)</span>
+        <input type="number" step="1000" name="insurance" value="{{ insurance }}">
+      </div>
+      <div class="field">
+        <span class="label">机库与停场 (Hangar/Parking, NZD/year)</span>
+        <input type="number" step="1000" name="hangar" value="{{ hangar }}">
+      </div>
+      <div class="field">
+        <span class="label">管理与行政 (Management & Admin, NZD/year)</span>
+        <input type="number" step="1000" name="management" value="{{ management }}">
+      </div>
+      <div class="field">
+        <span class="label">合规 / 质量 / SMS (Compliance/QA/SMS, NZD/year)</span>
+        <input type="number" step="1000" name="compliance" value="{{ compliance }}">
+      </div>
+      <div class="field">
+        <span class="label">市场与销售 (Marketing & Sales, NZD/year)</span>
+        <input type="number" step="1000" name="marketing" value="{{ marketing }}">
+      </div>
+      <div class="field">
+        <span class="label">融资 / 租赁成本 (Finance/Lease, NZD/year)</span>
+        <input type="number" step="1000" name="finance" value="{{ finance }}">
+      </div>
+      <div class="field">
+        <span class="label">其他固定成本 (Other Fixed, NZD/year)</span>
+        <input type="number" step="1000" name="fixed_other" value="{{ fixed_other }}">
+      </div>
+
+      <!-- 目标利润率 & 场景 -->
+      <div class="field">
+        <span class="label">目标利润率 (Target Margin, e.g. 0.2 = 20%)</span>
+        <input type="number" step="0.01" name="target_margin" value="{{ target_margin }}">
+      </div>
+
+      <div class="field">
+        <span class="label">场景1 年飞行小时数 (Scenario 1 Hours)</span>
+        <input type="number" step="1" name="scenario_1" value="{{ scenario_1 }}">
+      </div>
+      <div class="field">
+        <span class="label">场景2 年飞行小时数 (Scenario 2 Hours)</span>
+        <input type="number" step="1" name="scenario_2" value="{{ scenario_2 }}">
+      </div>
+      <div class="field">
+        <span class="label">场景3 年飞行小时数 (Scenario 3 Hours)</span>
+        <input type="number" step="1" name="scenario_3" value="{{ scenario_3 }}">
+      </div>
+      <div class="field">
+        <span class="label">场景4 年飞行小时数 (Scenario 4 Hours)</span>
+        <input type="number" step="1" name="scenario_4" value="{{ scenario_4 }}">
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn-primary">
+          🔄 重新计算 · Recalculate
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 右侧：结果 / Results -->
+  <div class="card">
+    <h2>核心结果 · Key Metrics</h2>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">每小时总成本 (Total Cost per Hour)</div>
+        <div class="kpi-value">NZ${{ "%.0f"|format(total_cost_per_hr) }}</div>
+        <div class="kpi-tag">COST / BLOCK HOUR</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">每小时利润 (Profit per Hour)</div>
+        <div class="kpi-value {% if profit_per_hr < 0 %}text-danger{% endif %}">
+          NZ${{ "%.0f"|format(profit_per_hr) }}
+        </div>
+        <div class="kpi-tag">AT CURRENT SELL RATE</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">利润率 (Margin per Hour)</div>
+        <div class="kpi-value {% if margin_per_hr < 0 %}text-danger{% endif %}">
+          {{ "%.1f"|format(margin_per_hr*100) }}%
+        </div>
+        <div class="kpi-tag">PROFIT MARGIN</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">年度利润 (Annual Profit)</div>
+        <div class="kpi-value {% if annual_profit < 0 %}text-danger{% endif %}">
+          NZ${{ "%.0f"|format(annual_profit) }}
+        </div>
+        <div class="kpi-tag">BASED ON ANNUAL HOURS</div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">盈亏平衡小时价 (Break-even Hourly Rate)</div>
+        <div class="kpi-value">NZ${{ "%.0f"|format(breakeven_rate) }}</div>
+        <div class="kpi-tag">NO PROFIT · NO LOSS</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">达到目标利润率所需售价 (Rate for Target Margin)</div>
+        <div class="kpi-value">
+          {% if target_rate %}
+            NZ${{ "%.0f"|format(target_rate) }}
+          {% else %}
+            -
+          {% endif %}
+        </div>
+        <div class="kpi-tag">TARGET {{ "%.0f"|format(target_margin*100) }}% MARGIN</div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:10px;">情景分析 · Scenario Analysis</h2>
+    <small>
+      不同年飞行小时数下的成本结构与年度利润对比。<br>
+      Compare cost and profit at different annual utilization levels.
+    </small>
+    {% include "_scenario_table.html" %}
+  </div>
+
+</div>
+{% endblock %}
